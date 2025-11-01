@@ -103,11 +103,10 @@ def listar_contas(contas):
         return
     
     else:    
+        print("\n               ======= Lista de Contas =======")
         for conta in contas:
             i += 1
             lista_contas = f"""\
-                ======= Lista de Contas =======
-
                 ========== Conta #{i} =========
 
                 Agência:__________{conta['agencia']}
