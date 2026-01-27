@@ -1,4 +1,3 @@
-
 def menu():
     menu = """\n
     ============ Menu ============
@@ -15,11 +14,11 @@ def menu():
     =>"""
     return input(menu)
 
+
 def depositar(saldo, valor, extrato, /):
     if valor > 0:
         saldo += valor
         extrato += f"Depósito: R$ {valor:.2f}\n"
-        
 
     else:
         print("Operação falhou! O valor informado é inválido.")
@@ -54,7 +53,7 @@ def sacar(*, saldo, valor, extrato, limite, numero_saques, limite_saques):
     return saldo, extrato, numero_saques
 
 
-def mostrar_extrato( saldo, /, *, extrato):
+def mostrar_extrato(saldo, /, *, extrato):
     print("\n================ EXTRATO ================")
     print("Não foram realizadas movimentações." if not extrato else extrato)
     print(f"\nSaldo: R$ {saldo:.2f}")
@@ -65,44 +64,56 @@ def novo_usuario(usuarios):
 
     cpf = input("Insira seu CPF (somente números): ")
     usuario_existente = verificar_cpf(cpf, usuarios)
-    
+
     if usuario_existente:
         print("\n%%% CPF já cadastrado %%%")
         return
-    
+
     nome = input("Insira seu nome completo: ")
     data_nascimento = input("Insira sua data de nascimento (dd-mm-aaaa): ")
-    endereco = input("Digite seu endereço (logradouro, nro, bairro, cidade/sigla do estado): ")
+    endereco = input(
+        "Digite seu endereço (logradouro, nro, bairro, cidade/sigla do estado): "
+    )
 
-    usuarios.append({"nome":nome, "data_de_nascimento":data_nascimento, "cpf":cpf, "endereco":endereco})
+    usuarios.append(
+        {
+            "nome": nome,
+            "data_de_nascimento": data_nascimento,
+            "cpf": cpf,
+            "endereco": endereco,
+        }
+    )
     return usuarios
+
 
 def verificar_cpf(cpf, usuarios):
     usuarios_cadastrados = [usuario for usuario in usuarios if usuario["cpf"] == cpf]
-    return usuarios_cadastrados [0] if usuarios_cadastrados else None
+    return usuarios_cadastrados[0] if usuarios_cadastrados else None
 
 
 def criar_conta(agencia, numero_conta, usuarios):
     cpf = input("Informe seu CPF (somente números): ")
     usuario = verificar_cpf(cpf, usuarios)
-    
+
     if usuario:
         print("\n===Conta criada com sucesso.")
         print(f"O número da conta é {numero_conta}")
-        return {"agencia": agencia, "numero_conta": numero_conta, "usuario":usuario}
-    print("""
+        return {"agencia": agencia, "numero_conta": numero_conta, "usuario": usuario}
+    print(
+        """
         %%% CPF não cadastrado. %%%
         %%% Criação de conta encerrado. %%%
-        """)
-        
+        """
+    )
+
 
 def listar_contas(contas):
     i = 0
     if contas == []:
         print("\n%%%% Nenhuma Conta Cadastrada %%%%")
         return
-    
-    else:    
+
+    else:
         print("\n               ======= Lista de Contas =======")
         for conta in contas:
             i += 1
@@ -137,9 +148,9 @@ def main():
         opcao = menu()
 
         if opcao == "d":
-        
+
             valor = float(input("Informe o valor que deseja depositar: "))
-            
+
             depositar(saldo, valor, extrato)
 
             saldo, extrato = depositar(saldo, valor, extrato)
@@ -166,7 +177,7 @@ def main():
             novo_usuario(usuarios)
 
         elif opcao == "nc":
-            
+
             conta = criar_conta(AGENCIA, numero_conta, usuarios)
             if conta:
                 contas.append(conta)
@@ -180,6 +191,9 @@ def main():
             break
 
         else:
-            print("Operação inválida, por favor selecione novamente a operação desejada.")
+            print(
+                "Operação inválida, por favor selecione novamente a operação desejada."
+            )
+
 
 main()
